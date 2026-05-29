@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WOOP — Аренда автомобилей</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #f6f6f6;
+      color: #111;
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(1200px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 42px;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .section-title span {
+      color: #1e73ea;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    header {
+      padding: 24px 0;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 800;
+      color: #1e73ea;
+    }
+
+    nav {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #222;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .nav-btn {
+      padding: 12px 24px;
+      border-radius: 10px;
+      background: #1e73ea;
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .hero {
+      padding: 40px 0 80px;
+      position: relative;
+    }
+
+    .hero-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 50px;
+    }
+
+    .hero h1 {
+      font-size: 64px;
+      line-height: 1;
+      font-weight: 800;
+      margin-bottom: 30px;
+    }
+
+    .hero h1 span {
+      color: #1e73ea;
+      display: block;
+    }
+
+    .hero p {
+      color: #666;
+      line-height: 1.8;
+      max-width: 500px;
+      margin-bottom: 30px;
+    }
+
+    .store-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .store-buttons img {
+      width: 170px;
+    }
+
+    .hero-image {
+      position: relative;
+    }
+
+    .hero-image::before {
+      content: "";
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: rgba(30, 115, 234, 0.12);
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: -1;
+    }
+
+    .booking {
+      background: #dcecff;
+      padding: 40px;
+      border-radius: 30px;
+      margin-top: 60px;
+    }
+
+    .booking h3 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 30px;
+    }
+
+    .booking-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .booking-grid input,
+    .booking-grid select {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      padding: 18px;
+      font-family: inherit;
+      background: #fff;
+    }
+
+    .booking-grid button {
+      border: none;
+      background: #1e73ea;
+      color: white;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .brands {
+      padding: 70px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      opacity: 0.7;
+    }
+
+    .brands img {
+      height: 38px;
+      object-fit: contain;
+    }
+
+    .benefits {
+      padding: 80px 0;
+    }
+
+    .benefits-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 60px;
+    }
+
+    .benefits-list {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .benefit-item {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .benefit-icon {
+      width: 60px;
+      height: 60px;
+      background: #eaf3ff;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .benefit-item h4 {
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .benefit-item p {
+      color: #666;
+      line-height: 1.7;
+    }
+
+    .cars {
+      padding: 80px 0;
+    }
+
+    .cars-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 50px;
+    }
+
+    .car-card {
+      background: white;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+      transition: 0.3s;
+    }
+
+    .car-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .car-content {
+      padding: 24px;
+    }
+
+    .car-content h4 {
+      margin-bottom: 12px;
+      font-size: 20px;
+    }
+
+    .car-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .price {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .price strong {
+      font-size: 22px;
+    }
+
+    .car-card button {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      background: #1e73ea;
+      color: white;
+      padding: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .reviews {
+      padding: 90px 0;
+      background: #dcecff;
+      margin-top: 80px;
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 50px;
+    }
+
+    .review-card {
+      background: white;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .review-card img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+    }
+
+    .review-content {
+      padding: 24px;
+    }
+
+    .review-content h4 {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+    .review-content p {
+      color: #555;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .download {
+      padding: 100px 0;
+    }
+
+    .download-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 60px;
+    }
+
+    .download h2 {
+      font-size: 54px;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      font-weight: 800;
+    }
+
+    .download h2 span {
+      color: #1e73ea;
+    }
+
+    footer {
+      background: #1e73ea;
+      color: white;
+      padding: 70px 0 30px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 0.8fr;
+      gap: 40px;
+    }
+
+    footer h4 {
+      margin-bottom: 20px;
+      font-size: 18px;
+    }
+
+    footer ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    footer a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+    }
+
+    .socials {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .copyright {
+      border-top: 1px solid rgba(255,255,255,0.2);
+      margin-top: 50px;
+      padding-top: 20px;
+      text-align: center;
+      color: rgba(255,255,255,0.7);
+      font-size: 14px;
+    }
+
+    @media (max-width: 1100px) {
+      .hero-wrapper,
+      .benefits-wrapper,
+      .download-wrapper,
+      .footer-grid,
+      .cars-grid,
+      .reviews-grid,
+      .booking-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+      }
+
+      .hero-wrapper,
+      .benefits-wrapper,
+      .download-wrapper,
+      .footer-grid,
+      .cars-grid,
+      .reviews-grid,
+      .booking-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1,
+      .download h2,
+      .section-title {
+        font-size: 42px;
+      }
+
+      .hero {
+        text-align: center;
+      }
+
+      .hero p,
+      .section-subtitle {
+        margin-inline: auto;
+      }
+
+      .store-buttons {
+        justify-content: center;
+      }
+
+      .brands {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container navbar">
+      <div class="logo">WOOP</div>
+
+      <nav>
+        <a href="#">Онлайн-бронирование</a>
+        <a href="#">Услуги</a>
+        <a href="#">Автопарк</a>
+        <a href="#">Отзывы</a>
+        <a href="#">Контакты</a>
+      </nav>
+
+      <a class="nav-btn" href="#">Войти</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-wrapper">
+
+      <div>
+        <h1>
+          <span>Легкость</span>
+          в поиске, бронировании и аренде автомобиля!
+        </h1>
+
+        <p>
+          Приобретайте автомобиль в любом месте и в любое время,
+          когда вам это нужно, с помощью нашего удобного мобильного приложения.
+        </p>
+
+        <div class="store-buttons">
+          <img src="img/Download_app.png" alt="Download app">
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <img src="img/Header.png" alt="Hero Car">
+      </div>
+    </div>
+
+    <div class="container booking">
+      <h3>Бронируйте прямо сейчас</h3>
+
+      <div class="booking-grid">
+        <input type="text" placeholder="Местоположение">
+        <input type="date">
+        <input type="date">
+        <select>
+          <option>Тип автомобиля</option>
+        </select>
+
+        <input type="time">
+        <input type="time">
+
+        <button>Забронировать</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="container brands">
+    <img src="img/Kov.png" alt="Brand">
+    <img src="img/Kov 1.png" alt="Brand">
+    <img src="img/Subtract.png" alt="Brand">
+    <img src="img/Group 712.png" alt="Brand">
+    <img src="img/Group_712.png" alt="Brand">
+  </div>
+
+  <section class="benefits">
+    <div class="container benefits-wrapper">
+
+      <div>
+        <img src="img/Why_choose_us.png" alt="Why choose us">
+      </div>
+
+      <div>
+        <h2 class="section-title" style="text-align:left;">
+          Мы предлагаем <span>лучшие предложения</span><br>
+          по аренде автомобилей
+        </h2>
+
+        <div class="benefits-list">
+
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <img src="img/call.png" alt="icon">
+            </div>
+
+            <div>
+              <h4>Лучшая цена гарантирована</h4>
+              <p>Мы сравниваем цены и предлагаем наиболее выгодные предложения для аренды автомобилей.</p>
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <img src="img/location.png" alt="icon">
+            </div>
+
+            <div>
+              <h4>Поддержка 24/7</h4>
+              <p>Наша команда всегда готова помочь вам на каждом этапе аренды автомобиля.</p>
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <img src="img/clock.png" alt="icon">
+            </div>
+
+            <div>
+              <h4>Быстрая доставка</h4>
+              <p>Получите автомобиль максимально быстро и без лишних сложностей.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cars">
+    <div class="container">
+
+      <h2 class="section-title">Наш Автопарк</h2>
+
+      <div class="cars-grid">
+
+        <div class="car-card">
+          <img src="img/image.png" alt="car">
+
+          <div class="car-content">
+            <h4>Skoda Octavia</h4>
+
+            <div class="car-info">
+              <span>Автомат</span>
+              <span>Бензин</span>
+            </div>
+
+            <div class="price">
+              <span>Стоимость</span>
+              <strong>4 465 ₽</strong>
+            </div>
+
+            <button>Арендовать сейчас</button>
+          </div>
+        </div>
+
+        <div class="car-card">
+          <img src="img/image (1).png" alt="car">
+
+          <div class="car-content">
+            <h4>BMW 218i</h4>
+
+            <div class="car-info">
+              <span>Автомат</span>
+              <span>Бензин</span>
+            </div>
+
+            <div class="price">
+              <span>Стоимость</span>
+              <strong>7 315 ₽</strong>
+            </div>
+
+            <button>Арендовать сейчас</button>
+          </div>
+        </div>
+
+        <div class="car-card">
+          <img src="img/image (2).png" alt="car">
+
+          <div class="car-content">
+            <h4>Camry Premium</h4>
+
+            <div class="car-info">
+              <span>Автомат</span>
+              <span>Гибрид</span>
+            </div>
+
+            <div class="price">
+              <span>Стоимость</span>
+              <strong>7 040 ₽</strong>
+            </div>
+
+            <button>Арендовать сейчас</button>
+          </div>
+        </div>
+
+        <div class="car-card">
+          <img src="img/image (3).png" alt="car">
+
+          <div class="car-content">
+            <h4>GAC Trumpchi</h4>
+
+            <div class="car-info">
+              <span>Автомат</span>
+              <span>Бензин</span>
+            </div>
+
+            <div class="price">
+              <span>Стоимость</span>
+              <strong>11 305 ₽</strong>
+            </div>
+
+            <button>Арендовать сейчас</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="reviews">
+    <div class="container">
+
+      <h2 class="section-title">Отзывы наших клиентов</h2>
+
+      <div class="reviews-grid">
+
+        <div class="review-card">
+          <img src="img/Rectangle 8.png" alt="review">
+
+          <div class="review-content">
+            <h4>5.0</h4>
+            <p>
+              Очень удобный сервис аренды автомобилей. Всё быстро,
+              понятно и без лишних сложностей.
+            </p>
+            <strong>Анна Фролова</strong>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <img src="img/Rectangle 8 (1).png" alt="review">
+
+          <div class="review-content">
+            <h4>5.0</h4>
+            <p>
+              Пользуюсь сервисом регулярно. Отличный выбор автомобилей
+              и качественная поддержка.
+            </p>
+            <strong>Роман Иванов</strong>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <img src="img/Audi 1.png" alt="review">
+
+          <div class="review-content">
+            <h4>5.0</h4>
+            <p>
+              Всё прошло идеально — от бронирования до возврата машины.
+            </p>
+            <strong>Мария Кузнецова</strong>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="download">
+    <div class="container download-wrapper">
+
+      <div>
+        <h2>
+          Скачайте приложение
+          <span>бесплатно</span>
+        </h2>
+
+        <p style="margin-bottom:30px;color:#666;line-height:1.8;">
+          Доступ к лучшим предложениям по аренде автомобилей прямо с вашего телефона.
+        </p>
+
+        <div class="store-buttons">
+          <img src="img/Download_app.png" alt="download app">
+        </div>
+      </div>
+
+      <div>
+        <img src="img/iPhone 14 Pro Space Black Mockup label.png" alt="app">
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+
+      <div class="footer-grid">
+
+        <div>
+          <div class="logo" style="color:white;margin-bottom:20px;">WOOP</div>
+
+          <ul>
+            <li>г. Москва, ул. Примерная 24</li>
+            <li>+7 (999) 123-45-67</li>
+            <li>support@woop.ru</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Информация</h4>
+
+          <ul>
+            <li><a href="#">О нас</a></li>
+            <li><a href="#">Условия аренды</a></li>
+            <li><a href="#">Отзывы</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Помощь</h4>
+
+          <ul>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Страховка</a></li>
+            <li><a href="#">Поддержка</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Соцсети</h4>
+
+          <div class="socials">
+            <img src="img/Social media logo 1.png" width="24" alt="social">
+            <img src="img/Social media logo 2.png" width="24" alt="social">
+            <img src="img/Social media logo 3.png" width="24" alt="social">
+            <img src="img/Social media logo 4.png" width="24" alt="social">
+          </div>
+        </div>
+
+      </div>
+
+      <div class="copyright">
+        Copyright © 2025 — Rentcar. All Rights Reserved.
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
